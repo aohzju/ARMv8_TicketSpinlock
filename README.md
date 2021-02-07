@@ -7,7 +7,7 @@ The demo application was developed on ARM FVP (fixed virtual platform) FVP_Base_
 
  # Build and run
  The armclang toolchain is used to build this example. And the build script is CMake script. It's tested on ARM FVP FVP_Base_RevC-2xAEMv8A. Assuming your development environment is correctly set up, this is the steps to build:
- 1. Creae a build directory: mkdir build
+ 1. Create a build directory: mkdir build
  2. CD to build: cd build.
  3. cmake ../ 
  4. cmake --build . -j8
