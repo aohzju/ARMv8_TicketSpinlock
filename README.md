@@ -15,9 +15,9 @@ The demo application was developed on ARM FVP (fixed virtual platform) FVP_Base_
  Hopefully, you'll get ARMv8Spinlock.axf up to this point.
  
  To run the demo on FVP:
-
- > FVP_Base_RevC-2xAEMv8A -C bp.secure_memory=false -C bp.terminal_0.mode=raw -C bp.refcounter.non_arch_start_at_default=1 -C cluster0.gicv3.FIQEn-RAO=1 -C pctl.startup='0.1.\*.\*, 0.0.\*.\*' -a ./ARMv8Spinlock.axf
- 
+```
+FVP_Base_RevC-2xAEMv8A -C bp.secure_memory=false -C bp.terminal_0.mode=raw -C bp.refcounter.non_arch_start_at_default=1 -C cluster0.gicv3.FIQEn-RAO=1 -C pctl.startup='0.1.*.*, 0.0.*.*' -a ./ARMv8Spinlock.axf
+```
  
 # ARM FVP
 The virtual platform used in this application is FVP_Base_RevC-2xAEMv8A, which can be downloaded [here](https://developer.arm.com/tools-and-software/simulation-models/fixed-virtual-platforms)
