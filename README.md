@@ -3,7 +3,7 @@ This small project implemented aarch64 ticket spinlock. The call to spinlock is 
 
 The spinlock code is in spinlock subfolder. The API header file is spinlock.h. You can copy the whole folder to your application and use it.
 
-The demo application was developed on ARM FVP (fixed virtual platform) FVP_Base_RevC-2xAEMv8A.
+The demo application was developed on ARM FVP (fixed virtual platform) FVP_Base_RevC-2xAEMv8A. The demo activates 8 CPU cores, all run the same application to print a string. As there is only one UART port, a spinlock is used to arbitrate the access to the UART. The ticket spinlock ensure each core to get an even access to the UART.
 
  # Build and run
  The armclang toolchain is used to build this example. And the build script is CMake script. It's tested on ARM FVP FVP_Base_RevC-2xAEMv8A. Assuming your development environment is correctly set up, this is the steps to build:
