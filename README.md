@@ -1,5 +1,5 @@
 # ARMv8_TicketSpinlock
-This small project implemented aarch64 ticket spinlock. 
+This small project implemented aarch64 ticket spinlock. The call to spinlock is nestable.
 
 The spinlock code is in spinlock subfolder. The API header file is spinlock.h. You can copy the whole folder to your application and use it.
 
@@ -10,13 +10,13 @@ The demo application was developed on ARM FVP (fixed virtual platform) FVP_Base_
  1. Creae a build directory: mkdir build
  2. CD to build: cd build.
  3. cmake ../ 
- 4. cmake --build .
+ 4. cmake --build . -j8
  
  Hopefully, you'll get ARMv8Spinlock.axf up to this point.
  
  To run the demo on FVP:
 
- > FVP_Base_RevC-2xAEMv8A -C bp.secure_memory=false -C bp.terminal_0.mode=raw -C bp.refcounter.non_arch_start_at_default=1 -C cluster0.gicv3.FIQEn-RAO=1 -C pctl.startup='0.1.*.*, 0.0.*.*' -a ./ARMv8Spinlock.axf
+ > FVP_Base_RevC-2xAEMv8A -C bp.secure_memory=false -C bp.terminal_0.mode=raw -C bp.refcounter.non_arch_start_at_default=1 -C cluster0.gicv3.FIQEn-RAO=1 -C pctl.startup='0.1.\*.\*, 0.0.\*.\*' -a ./ARMv8Spinlock.axf
  
  
 # ARM FVP
