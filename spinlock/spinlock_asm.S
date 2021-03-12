@@ -24,6 +24,9 @@ SOFTWARE.
 
 
 	.balign 64  //aligned to cache line size
+	.global raw_spin_lock
+	.type raw_spin_lock, %function
+//void raw_spin_lock(uint64_t *locker);
 	.global raw_spin_lock_irqsave
 	.type raw_spin_lock_irqsave, %function
 //uint32_t raw_spin_lock_irqsave(uint64_t *locker);
@@ -36,7 +39,11 @@ raw_spin_lock_irqsave:
     //DSB     SY //barrier not needed: See armv8a spec C5.1.3: Writes to PSTATE.{PAN, D, A, I, F} occur in program order without the need for additional synchronization
     //ISB     SY
 
+	//run through to call raw_spin_lock:
+
+raw_spin_lock:
 	ORR		X2, XZR, #0x100000000
+
 WaitTicket:
 	LDAXR	X3, [X0]			//Hi: next ticket, Lo: owner
 	LSR		X4, X3, #32			//W4: hold the ticket# allocated to this core
@@ -60,17 +67,26 @@ Done:
 
 //==============================================================================================================
 
+	.global raw_spin_unlock
+	.type 	raw_spin_unlock, %function
+//void     raw_spin_unlock(uint64_t *locker);
 	.global raw_spin_unlock_irqrestore
 	.type 	raw_spin_unlock_irqrestore, %function
 //void     raw_spin_unlock_irqrestore(uint64_t *locker, uint32_t irq_msk);
 
-raw_spin_unlock_irqrestore:
+raw_spin_unlock:
 	LDR		X2, [X0]
 	ADD		W3, W2, #1
 	LSR		X2, X2, #32
 	LSL		X2, X2, #32
 	ORR		X2, X2, X3
 	STLR	X2, [X0]
+	RET
+
+raw_spin_unlock_irqrestore:
+	MOV		X6, LR //Assumed X6 is not used by raw_spin_unlock
+	BL		raw_spin_unlock
+	MOV		LR, X6
 	MSR		DAIF, X1
 	RET
 

@@ -42,12 +42,22 @@ typedef struct
 #define SPIN_LOCK_UNLOCKED	{0}
 
 //ticketed spinlock, allow nesting
+//Used in non-Irq context:
 uint32_t spin_lock_irqsave(spinlock_t *locker); //lock and disable interrupts at the same time, allow nesting
 void     spin_unlock_irqrestore(spinlock_t *locker, uint32_t irq_msk);  //unlock and restore the original interrupt mask
 
 //ticketed spinlock, not supporting nesting:
+//Used in non-Irq context:
 uint32_t raw_spin_lock_irqsave(uint64_t *locker); //lock and disable interrupts at the same time
 void     raw_spin_unlock_irqrestore(uint64_t *locker, uint32_t irq_msk);  //unlock and restore the original interrupt mask
+
+//ticketed spinlock, not supporting nesting, not mask/restore irq:
+//Used in IRQ handlers only:
+void	 raw_spin_lock(uint64_t *locker); //lock
+void     raw_spin_unlock(uint64_t *locker);  //unlock
+
+void	 spin_lock(spinlock_t *locker); //lock
+void     spin_unlock(spinlock_t *locker);  //unlock
 
 
 #endif /* _SPINLOCK_H_ */

@@ -74,3 +74,14 @@ void spin_unlock_irqrestore(spinlock_t *locker, uint32_t irq_mask)
 	else
 		locker->lock_core_count -= 0x100000000ULL; //decrease lock count by 1
 }
+
+void spin_lock(spinlock_t *locker)
+{
+	raw_spin_lock(&locker->ticket);
+}
+ void spin_unlock(spinlock_t *locker)
+ {
+	 raw_spin_unlock(&locker->ticket);
+ }
+
+
