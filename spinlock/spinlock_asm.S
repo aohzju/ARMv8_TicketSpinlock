@@ -75,12 +75,9 @@ Done:
 //void     raw_spin_unlock_irqrestore(uint64_t *locker, uint32_t irq_msk);
 
 raw_spin_unlock:
-	LDR		X2, [X0]
-	ADD		W3, W2, #1
-	LSR		X2, X2, #32
-	LSL		X2, X2, #32
-	ORR		X2, X2, X3
-	STLR	X2, [X0]
+	LDR	W2, [X0]
+	ADD	W3, W2, #1
+	STLR	W3, [X0]
 	RET
 
 raw_spin_unlock_irqrestore:
